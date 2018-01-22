@@ -25,7 +25,15 @@ class Block {
 export default class BlockChain extends Component {
   constructor(props){
     super(props);
-    this.state={fireAll:false,totalCost:0,msg:'Add a block when ready.',timeToLoad:0,difficult:2,blocked:'Not loaded yet',chain:[this.createGenesisBlock()]};
+    this.state={
+      fireAll:false,
+      totalCost:0,
+      totalAttempts:0,
+      msg:'Add a block when ready.',
+      timeToLoad:0,
+      difficult:2,
+      blocked:'Not loaded yet',
+      chain:[this.createGenesisBlock()]};
     this.maxVal=5;
     this.minVal=1;
     this.maxBlocks=10;
@@ -58,7 +66,7 @@ export default class BlockChain extends Component {
     }
   }
   _refresh = evt => {
-    this.setState({msg:'The blockchain has been refreshed.',totalCost:0,timeToLoad:0,fireAll:false,chain:[this.createGenesisBlock()]});
+    this.setState({msg:'The blockchain has been refreshed.',totalAttempts:0,totalCost:0,timeToLoad:0,fireAll:false,chain:[this.createGenesisBlock()]});
   }
   _add = evt =>{
     if(this.state.chain.length<this.maxBlocks+1){
@@ -88,7 +96,7 @@ export default class BlockChain extends Component {
   }
   _postadd = evt =>{
     this.addBlock(new Block(Math.round(Math.random()*99999),new Date(),{IHOPE:'I am minable'}))
-    this.setState({blocked:this.getLatestBlock().hash,msg:`It took ${this.state.timeToLoad/1000} seconds, mining ${this.getLatestBlock().nonce} times, to load the latest of ${this.state.chain.length-1} blocks. Total time for blockchain creation ${this.state.totalCost/1000} seconds.`});
+    this.setState({totalAttempts:this.state.totalAttempts+this.getLatestBlock().nonce,blocked:this.getLatestBlock().hash,msg:`It took ${this.state.timeToLoad/1000} seconds, mining ${this.getLatestBlock().nonce} times, to load the latest of ${this.state.chain.length-1} blocks. Total time for blockchain creation ${this.state.totalCost/1000} seconds.`});
   }
   _postaddall = evt =>{
     while(this.state.chain.length<this.maxBlocks+1){
@@ -102,6 +110,7 @@ export default class BlockChain extends Component {
       fireAll:true,
       msg:'Blocks are being mined...',
       chain:[this.createGenesisBlock()],
+      totalAttempts:0,
       timeToLoad:0,
       totalCost:0,
     });
@@ -115,7 +124,7 @@ export default class BlockChain extends Component {
           'Adding Difficulty resets Chain',
           'Adding Difficulty will reset your chain.',
           [
-            {text: 'Increase Difficulty', onPress: () => this.setState({msg:'Add a block when ready.',fireAll:false,chain:[this.createGenesisBlock()],timeToLoad:0,totalCost:0,difficult:Math.min(this.maxVal,this.state.difficult+1)})},
+            {text: 'Increase Difficulty', onPress: () => this.setState({msg:'Add a block when ready.',fireAll:false,chain:[this.createGenesisBlock()],totalAttempts:0,timeToLoad:0,totalCost:0,difficult:Math.min(this.maxVal,this.state.difficult+1)})},
             {text: 'Cancel', onPress: () =>  console.log('canceled')},
           ],
           { cancelable: true }
@@ -134,7 +143,7 @@ export default class BlockChain extends Component {
           'Lowering Difficulty resets Chain',
           'Lowering Difficulty will reset your chain.',
           [
-            {text: 'Decrease Difficulty', onPress: () => this.setState({msg:'Add a block when ready.',fireAll:false,chain:[this.createGenesisBlock()],timeToLoad:0,totalCost:0,difficult:Math.max(this.minVal,this.state.difficult-1)})},
+            {text: 'Decrease Difficulty', onPress: () => this.setState({msg:'Add a block when ready.',fireAll:false,chain:[this.createGenesisBlock()],totalAttempts:0,timeToLoad:0,totalCost:0,difficult:Math.max(this.minVal,this.state.difficult-1)})},
             {text: 'Cancel', onPress: () =>  console.log('canceled')},
           ],
           { cancelable: true }
