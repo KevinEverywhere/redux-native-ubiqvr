@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { Provider, connect } from 'react-redux';
-import { svgMult } from './src/services/actions';
-svgMult(800);
 import store from './src/services/store.js';
 import LinkComponent from './src/components/LinkComponent/index.js';
 import ChosenContent from './src/components/ChosenContent/index.js';

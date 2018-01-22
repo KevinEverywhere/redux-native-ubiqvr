@@ -25,7 +25,7 @@ class Block {
 export default class BlockChain extends Component {
   constructor(props){
     super(props);
-    this.state={totalCost:0,msg:'Add a block when ready.',timeToLoad:0,difficult:2,blocked:'Not loaded yet',chain:[this.createGenesisBlock()]};
+    this.state={fireAll:false,totalCost:0,msg:'Add a block when ready.',timeToLoad:0,difficult:2,blocked:'Not loaded yet',chain:[this.createGenesisBlock()]};
     this.maxVal=5;
     this.minVal=1;
     this.maxBlocks=10;
@@ -58,11 +58,11 @@ export default class BlockChain extends Component {
     }
   }
   _refresh = evt => {
-    this.setState({msg:'The blockchain has been refreshed.',chain:[this.createGenesisBlock()]});
+    this.setState({msg:'The blockchain has been refreshed.',totalCost:0,timeToLoad:0,fireAll:false,chain:[this.createGenesisBlock()]});
   }
   _add = evt =>{
     if(this.state.chain.length<this.maxBlocks+1){
-      this.setState({msg:'Block is being mined...'});
+      this.setState({fireAll:false,msg:'Block is being mined...'});
       const me=this;
       setTimeout(()=>{me._postadd()},50);
     }else{
@@ -72,9 +72,41 @@ export default class BlockChain extends Component {
       );
     }
   }
+  _addAll = evt =>{
+    if(this.state.difficult<this.maxVal){
+        Alert.alert(
+          'Adding Maximum Blocks resets Chain',
+          'Adding maximum blocks will reset your chain. It will end when the maximum blocks length is reached.',[
+            {text: 'Initiate Chain Building', onPress: () => this._pressAddAll()},
+              {text: 'Cancel', onPress: () =>  console.log('canceled')},
+          ],
+          { cancelable: true }
+        );
+    }else{
+      Alert.alert('Max Zeroes',`The difficulty permitted is between 1 and 5 zeroes. You currently have ${this.state.difficult}`);
+    }
+  }
   _postadd = evt =>{
     this.addBlock(new Block(Math.round(Math.random()*99999),new Date(),{IHOPE:'I am minable'}))
-    this.setState({blocked:this.getLatestBlock().hash,msg:`It took ${this.state.timeToLoad/1000} seconds, mining ${this.getLatestBlock().nonce} times, to load the latest of ${this.state.chain.length-1} blocks`});
+    this.setState({blocked:this.getLatestBlock().hash,msg:`It took ${this.state.timeToLoad/1000} seconds, mining ${this.getLatestBlock().nonce} times, to load the latest of ${this.state.chain.length-1} blocks. Total time for blockchain creation ${this.state.totalCost/1000} seconds.`});
+  }
+  _postaddall = evt =>{
+    while(this.state.chain.length<this.maxBlocks+1){
+      this.addBlock(new Block(Math.round(Math.random()*99999),new Date(),{IHOPE:'I am minable'}))
+      this.setState({blocked:this.getLatestBlock().hash,msg:`It took ${this.state.timeToLoad/1000} seconds, mining ${this.getLatestBlock().nonce} times, to load the latest of ${this.state.chain.length-1} blocks. Total time for blockchain creation ${this.state.totalCost/1000} seconds.`});
+    }
+    console.log('postaddall finished');
+  }
+  _pressAddAll = () =>{
+    this.setState({
+      fireAll:true,
+      msg:'Blocks are being mined...',
+      chain:[this.createGenesisBlock()],
+      timeToLoad:0,
+      totalCost:0,
+    });
+    const me=this;
+    setTimeout(()=>{me._postaddall()},50);
   }
   _pressAdd = evt =>{
     if(this.state.difficult<this.maxVal){
@@ -83,17 +115,17 @@ export default class BlockChain extends Component {
           'Adding Difficulty resets Chain',
           'Adding Difficulty will reset your chain.',
           [
-            {text: 'Increase Difficulty', onPress: () => this.setState({msg:'Add a block when ready.',chain:[this.createGenesisBlock()],difficult:Math.min(this.maxVal,this.state.difficult+1)})},
+            {text: 'Increase Difficulty', onPress: () => this.setState({msg:'Add a block when ready.',fireAll:false,chain:[this.createGenesisBlock()],timeToLoad:0,totalCost:0,difficult:Math.min(this.maxVal,this.state.difficult+1)})},
             {text: 'Cancel', onPress: () =>  console.log('canceled')},
           ],
           { cancelable: true }
         );
       }else{
-        this.setState({msg:'Add a block to calculate load time.',difficult:Math.min(this.maxVal,this.state.difficult+1)});
+        this.setState({msg:'Add a block to calculate load time.',fireAll:false,difficult:Math.min(this.maxVal,this.state.difficult+1)});
       }
     }else{
       Alert.alert('Max Zeroes',`The difficulty permitted is between 1 and 5 zeroes. You currently have ${this.state.difficult}`);
-  }
+    }
   }
   _pressSub = evt =>{
     if(this.state.difficult>this.minVal){
@@ -102,7 +134,7 @@ export default class BlockChain extends Component {
           'Lowering Difficulty resets Chain',
           'Lowering Difficulty will reset your chain.',
           [
-            {text: 'Decrease Difficulty', onPress: () => this.setState({msg:'Add a block when ready.',chain:[this.createGenesisBlock()],difficult:Math.max(this.minVal,this.state.difficult-1)})},
+            {text: 'Decrease Difficulty', onPress: () => this.setState({msg:'Add a block when ready.',fireAll:false,chain:[this.createGenesisBlock()],timeToLoad:0,totalCost:0,difficult:Math.max(this.minVal,this.state.difficult-1)})},
             {text: 'Cancel', onPress: () =>  console.log('canceled')},
           ],
           { cancelable: true }
@@ -195,9 +227,10 @@ export default class BlockChain extends Component {
           <View style={styles.midSection}>{ blockstring }</View>
           <Text style={styles.aboveFooter}>{this.state.msg}</Text>
           <View style={styles.footer}>
-            <Button style={styles.btn} onPress={this._pressAdd} title="More 0s"></Button>
-            <Button style={styles.btn} onPress={this._pressSub} title="Less 0s"></Button>
+            <Button style={styles.btn} onPress={this._pressAdd} title="Harder"></Button>
+            <Button style={styles.btn} onPress={this._pressSub} title="Easier"></Button>
             <Button style={styles.btn} onPress={this._add} title="Add Block"></Button>
+            <Button style={styles.btn} onPress={this._addAll} title="Fill Chain"></Button>
             <Button style={styles.btn} onPress={this._refresh} title="Refresh Chain"></Button>
           </View>
       </View>);
