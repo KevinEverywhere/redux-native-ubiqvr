@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { View, Text, ART } from 'react-native';
+import store from '../../services/store';
+// import d3 from 'd3';
+
+const ReactART = ART.ReactART;
+
+import SurfaceConnect from '../SurfaceConnect';
 
 export default class Selector extends Component {
   render() {
@@ -28,9 +34,20 @@ export default class Selector extends Component {
         margin:0
       }
     }
+    // <View style={componentStyle}>
+    //   <Text>Surface {one},  {one}</Text>
+    //   <Text>SVG, width { main.width } =
+    //   {getSVGDims({height:dims.height,width:dims.width}).width}
+    //    and height {main.height} =
+    //   {getSVGDims({height:dims.height,width:dims.width}).height}
+    // </Text>
+
+let arr=Array.from(store.getState());
     return (
       <View style={componentStyle}>
-        <Text>Select from ...</Text>
+        {/* <SurfaceConnect fullScreen={this.props.fullScreen} style={{backgroundColor:'#ffc',zIndex:100}}> */}
+        {/* </SurfaceConnect> */}
+<Text>{arr.length} is PLEA</Text>
       </View>);
   }
 }

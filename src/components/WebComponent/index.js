@@ -20,6 +20,13 @@ export default class WebComponent extends Component {
         margin:0
       }
     }
+    // const allVars={};
+    // for(var z in this){
+    //   allVars.push({name:z,val:this[z]});
+    // }
+    // const allText=allVars.map((each) => {
+    //   return <div>{each.name}, {each.value}</div>
+    // })
     if(this.props.uri){
       return <WebView style={componentStyle} source={{url: this.props.uri}} />;
     }

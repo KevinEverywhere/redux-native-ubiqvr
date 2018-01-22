@@ -30,8 +30,8 @@ export default class FindURL extends Component {
     }
     return (
       <View style={componentStyle}>
-        <Text>Select from ...</Text>
-        <Image source='https://photos.google.com/photo/AF1QipPYhSJJmeF3Ihw2PAT6DqwZU15ciIdHckip8ZrC' />
-      </View>);
+        <Text>Select from ..</Text>
+        <Image source={{uri:'https://lh3.googleusercontent.com/JXlXGP_U2RVnKl5J9HM_PBp7Alwlc9pAcj3k9L_k_25xQ-oIKOrI_Ih2NW841XTPG8xICCI_IMJuVOJJeViimCXFunt3MehcBwAXw4D7DmPUtY6AjtGCQhLL_yx5UT0iM_eoKV3baQ=w1252-h626-no'}} style={{width:'100%',height:'100%'}} />
+       </View>);
   }
 }
