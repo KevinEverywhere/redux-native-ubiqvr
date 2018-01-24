@@ -130,7 +130,7 @@ export default class App extends Component {
           </View>
           <View style={styles[(this.state.fullScreen===true) ? 'outerNot' : this.state.outer]}>
             <LinkComponent choose={this} id='uploader'>Authenticated</LinkComponent>
-            <LinkComponent choose={this} id='findUrl'>UnAuthd</LinkComponent>
+            <LinkComponent choose={this} id='aframe'>AFrame</LinkComponent>
             <LinkComponent choose={this} id='blockchain'>BlockChain</LinkComponent>
           </View>
         </View>

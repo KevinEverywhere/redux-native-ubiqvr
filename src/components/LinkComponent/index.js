@@ -13,8 +13,8 @@ export default class LinkComponent extends Component {
     return this.props.choose.state.selectedComponent === this.props.id;
   }
   render() {
-    const navDim = Math.round(svgDims.min/8);
-    const svgS = {width:navDim,height:navDim};
+    const navDim = Math.round(svgDims.min/6);
+    const svgS = {width:navDim,height:navDim,alignSelf:'center'};
     const styled = this.amIActive() ? [styles.button,styles.active] : styles.button;
     const subStyled = this.amIActive() ? [styles.buttonText,styles.buttonTextActive] : styles.buttonText;
     return (
