@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
 
 export default class App extends Component {
   deepState={fullScreen:false};
-  state={outest:'outest',outer:'outer',selectedComponent:'',fullScreen:false};
+  state={outest:'outest',outer:'outer',selectedComponent:'home',fullScreen:false};
   selectView = (which) => {
     this.setState({selectedComponent:which})
   }

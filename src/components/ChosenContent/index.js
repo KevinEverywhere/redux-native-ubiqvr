@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, View, } from 'react-native';
 import WebComponent from '../WebComponent';
 import LinkComponent from '../LinkComponent';
@@ -18,6 +18,8 @@ const styles = StyleSheet.create({
     margin: 0,
   },
 });
+
+const perspective = dimension => dimension * 4;
 
 const aframe=`<!DOCTYPE html>
 <html>
@@ -39,45 +41,47 @@ const aframe=`<!DOCTYPE html>
   </body>
 </html>;`
 
-export default class ChosenContent extends PureComponent {
+export default class ChosenContent extends Component {
+  deepState = {
+    home: {
+      substate: null,
+      content: <View style={styles.outest}><WebComponent fullScreen={this.props.fullScreen} html={'<strong>Hoome</strong>'} /></View>
+    },
+    selector: {
+      substate: null,
+      content: <View style={styles.outest}><Selector fullScreen={this.props.fullScreen} /></View>,
+    },
+    composer: {
+      substate: null,
+      content: <View style={styles.outest}><WebComponent fullScreen={this.props.fullScreen} uri={'http://everyvu.com/shite/'} /></View>,
+    },
+    blockchain: {
+      substate: null,
+      content: <View style={styles.outest}><BlockChain fullScreen={this.props.fullScreen} /></View>,
+    },
+    aframe: {
+      substate: null,
+      content: <View style={styles.outest}><WebComponent fullScreen={this.props.fullScreen} uri={'http://everyvu.com/guesthost/'} /></View>,
+    },
+    uploader: {
+      substate: null,
+      content: <View style={styles.outest}><WebComponent fullScreen={this.props.fullScreen} uri={'http://www.google.com/'} /></View>,
+    },
+    findUrl: {
+      substate: null,
+      content: <View style={styles.outest}><FindURL fullScreen={this.props.fullScreen} /></View>,
+    },
+  };
+  state={currentState: 'home'};
+  // componentShouldUpdate(nextState, nextProps){
+  //   console.log(this.state.currentState);
+  //   console.log(this.props.choose.state.selectedComponent);
+  //   if(this.state.currentState !== this.props.choose.state.selectedComponent){
+  //     return true;
+  //   }
+  // }
   render(){
-    const props = this.props;
-    let content=null;
-    switch(props.component){
-      case 'home':
-        content = <WebComponent fullScreen={props.fullScreen} html={'<strong>Home</strong>'} />
-        break;
-      case 'selector':
-        content = (<View style={styles.outest}>
-          <Selector fullScreen={props.fullScreen} />
-        </View>);
-
-        break;
-        case 'blockchain':
-          content = (<View style={styles.outest}>
-            <BlockChain fullScreen={props.fullScreen} />
-          </View>);
-
-          break;
-      case 'composer':
-        content = <WebComponent fullScreen={props.fullScreen} uri={'http://everyvu.com/shite/'} />;
-        break;
-      case 'uploader':
-        content = <WebComponent fullScreen={props.fullScreen} html={'<div style="background-color:#ce8"><video width="400" height="320" controls autoplay src="http://everyvu.com/w360/thankyou-injected.mp4"></video></div>'} />;
-        break;
-      case 'findUrl':
-        content = <View style={styles.outest}><FindURL fullScreen={props.fullScreen} /></View>;
-        break;
-      case 'aframe':
-        content = <WebComponent fullScreen={props.fullScreen} uri={'http://everyvu.com/guesthost/'} />;
-        break;
-      case 'share':
-        content = <WebComponent fullScreen={props.fullScreen} uri={'http://everyvu.com/guesthost/'} />;
-        break;
-      default:
-        content = <WebComponent fullScreen={props.fullScreen} uri={'http://www.everyvu.com/'} />;
-        break;
-    }
-    return content;
+    return this.deepState[this.props.component].content;
+    // return content;
   }
 }
