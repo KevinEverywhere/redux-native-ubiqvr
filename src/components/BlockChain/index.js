@@ -157,6 +157,9 @@ export default class BlockChain extends Component {
     return new Block(0,new Date(),'Genesis');
   }
   render() {
+    if(this.props.style==='inactive'){
+      return null;
+    }
     let blockstring=<Text>Please add a block to begin.</Text>;
     const styles = StyleSheet.create({
       bodyStyle: {
@@ -231,7 +234,7 @@ export default class BlockChain extends Component {
     }
     return (
       <View style={styles.bodyStyle}>
-          <Text style={styles.titleText}>BlockChain Technologies</Text>
+          <Text style={styles.titleText}>BlockChain {this.props.style} Technologies</Text>
           <Text style={styles.bodyText}>A BlockChain is made up of an unbroken chain of encrypted blocks. It is created here by requiring the first characters to be 0 (zero). Following is a list of Blocks with {this.state.difficult} starting zeroes.</Text>
           <View style={styles.midSection}>{ blockstring }</View>
           <Text style={styles.aboveFooter}>{this.state.msg}</Text>

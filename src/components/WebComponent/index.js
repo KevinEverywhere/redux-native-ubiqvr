@@ -27,6 +27,9 @@ export default class WebComponent extends Component {
     // const allText=allVars.map((each) => {
     //   return <div>{each.name}, {each.value}</div>
     // })
+    if(this.props.style==='inactive'){
+      return null;
+    }
     if(this.props.uri){
       return <WebView style={componentStyle} source={{url: this.props.uri}} />;
     }

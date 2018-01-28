@@ -126,7 +126,7 @@ export default class App extends Component {
                 <Text>Toggle-FullScreen</Text>
               </TouchableHighlight>
             </TouchableOpacity>
-            <ChosenContent fullScreen={this.state.fullScreen} component={this.state.selectedComponent} />
+            <ChosenContent choose={this} fullScreen={this.state.fullScreen} component={this.state.selectedComponent} />
           </View>
           <View style={styles[(this.state.fullScreen===true) ? 'outerNot' : this.state.outer]}>
             <LinkComponent choose={this} id='uploader'>Authenticated</LinkComponent>
