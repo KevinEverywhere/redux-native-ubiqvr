@@ -117,8 +117,8 @@ export default class App extends Component {
         <View onLayout={this.reorient} style={styles[this.state.outest]}>
           <View style={styles[(this.state.fullScreen===true) ? 'outerNot' : this.state.outer]}>
             <LinkComponent choose={this} id='home'>Home</LinkComponent>
-            <LinkComponent choose={this} id='selector'>Selector</LinkComponent>
-            <LinkComponent choose={this} id='composer'>Compose</LinkComponent>
+            <LinkComponent choose={this} id='selector'>Upload/Search</LinkComponent>
+            <LinkComponent choose={this} id='composer'>Edit</LinkComponent>
           </View>
           <View style={styles.main}>
             <TouchableOpacity style={touchableOpacity} onPress={this._onPressTop}>
@@ -129,9 +129,9 @@ export default class App extends Component {
             <ChosenContent choose={this} fullScreen={this.state.fullScreen} component={this.state.selectedComponent} />
           </View>
           <View style={styles[(this.state.fullScreen===true) ? 'outerNot' : this.state.outer]}>
-            <LinkComponent choose={this} id='uploader'>Authenticated</LinkComponent>
-            <LinkComponent choose={this} id='aframe'>AFrame</LinkComponent>
-            <LinkComponent choose={this} id='blockchain'>BlockChain</LinkComponent>
+            <LinkComponent choose={this} id='uploader'>Community/Share</LinkComponent>
+            <LinkComponent choose={this} id='blockchain'>Merchandise/BlockChain/Store</LinkComponent>
+            <LinkComponent choose={this} id='aframe'>Content</LinkComponent>
           </View>
         </View>
       );

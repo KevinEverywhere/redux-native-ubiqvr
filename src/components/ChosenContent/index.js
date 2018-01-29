@@ -131,7 +131,7 @@ export default class ChosenContent extends Component {
            {/* { this.props.component==='uploader' ? <WebComponent fullScreen={this.props.fullScreen} uri={'http://www.google.com/'} /> : null } */}
          </View>
          <View style={this.getMyScreen('aframe')}>
-           <WebComponent fullScreen={this.props.fullScreen} uri={'http://everyvu.com/guesthost/'} />
+           <WebComponent fullScreen={this.props.fullScreen} uri={'http://everyvu.com/guesthost/?vid1=vid97.mp4'} />
            {/* {this.props.component==='aframe' ?  <WebComponent fullScreen={this.props.fullScreen} uri={'http://everyvu.com/guesthost/'} /> : null} */}
          </View>
          <View style={this.getMyScreen('blockchain')}>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ART } from 'react-native';
 import store from '../../services/store';
+import { H1, BodyText } from '../../services/textUtils';
 // import d3 from 'd3';
 
 const ReactART = ART.ReactART;
@@ -20,7 +21,7 @@ export default class Selector extends Component {
       alignItems: 'stretch',
       height: '100%',
       backgroundColor:'#fff',
-      margin:0
+      margin:10
     }
     if(this.props.fullScreen && this.props.fullScreen === true){
       componentStyle = {
@@ -31,7 +32,7 @@ export default class Selector extends Component {
         right:0,
         bottom:0,
         backgroundColor:'#fff',
-        margin:0
+        margin:10
       }
     }
     // <View style={componentStyle}>
@@ -45,9 +46,12 @@ export default class Selector extends Component {
 let arr=Array.from(store.getState());
     return (
       <View style={componentStyle}>
-        {/* <SurfaceConnect fullScreen={this.props.fullScreen} style={{backgroundColor:'#ffc',zIndex:100}}> */}
-        {/* </SurfaceConnect> */}
-<Text>{arr.length} is PLEA</Text>
+        <H1>Finding Content</H1>
+
+        <BodyText>Choose below to upload content, or find content online. Start here if you are setting permissions on something that you have already uploaded.</BodyText>
+
+
+
       </View>);
   }
 }
